@@ -24,7 +24,7 @@ module.exports = {
       name: "sub_app",
       filename: "remoteEntry.js",
       exposes: {
-        "./Box": "./src/components/Box",
+        "./Folders": "./src/components/Folders",
       },
       shared: {
         react: {

@@ -1,7 +1,13 @@
 import React from "react";
 
+import { Folders } from "./components/Folders";
+
 function App() {
-  return <div>Folder here!</div>;
+  return (
+    <div>
+      <Folders />
+    </div>
+  );
 }
 
 export default App;

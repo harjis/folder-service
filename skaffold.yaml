@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+build:
+  artifacts:
+    -
+      image: d0rka/folder-service-frontend
+      context: frontend
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          -
+            src: 'src/*'
+            dest: .
+    -
+      image: d0rka/folder-service-backend
+      context: backend
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        infer:
+          - '*.ex'
