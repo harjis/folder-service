@@ -7,5 +7,7 @@ defmodule BackendWeb.Router do
 
   scope "/api", BackendWeb do
     pipe_through :api
+
+    resources "/folders", FolderController
   end
 end

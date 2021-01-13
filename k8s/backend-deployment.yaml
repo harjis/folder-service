@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers:
+        -
+          name: backend
+          image: d0rka/folder-service-backend
+          ports:
+            -
+              containerPort: 3000
+          env:
+            -
+              name: PGHOST
+              value: postgres-cluster-ip-service
+            -
+              name: PGUSER
+              value: postgres
+            -
+              name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
+            -
+              name: PGDATABASE_DEVELOPMENT
+              value: folder-service_development
+            -
+              name: PGDATABASE_TEST
+              value: folder-service_test
+            -
+              name: PGDATABASE_PRODUCTION
+              value: folder-service_production

@@ -8,7 +8,7 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 3002,
+    port: 3001,
     host: "0.0.0.0", // So that dev server can be accessed externally
   },
   output: {
