@@ -3,12 +3,12 @@ entries:
   folder-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-01-13T14:53:57.056223+02:00"
+    created: "2021-01-13T15:02:23.013894+02:00"
     description: A Helm chart for Kubernetes
-    digest: fb55679eeab1388980f58db477899274f2f66bf9c67c3fcda4d2983df2aaf870
+    digest: 5c66d1e1b600e2311444b1844f7c0a0a7dc8f0505dde8c535084e9b4f8a78316
     name: folder-service
     type: application
     urls:
     - https://harjis.github.io/folder-service/folder-service-0.1.0.tgz
     version: 0.1.0
-generated: "2021-01-13T14:53:56.996614+02:00"
+generated: "2021-01-13T15:02:22.940686+02:00"
