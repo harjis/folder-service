@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+frontend/node_modules
+backend/_build

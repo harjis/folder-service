@@ -1,15 +1,11 @@
-# How to add to helm
-
-```shell script
-helm repo index .
-```
-
 # How to use
 
+1. Add helm repo
 ```shell script
-helm repo add folder-service https://harjis.github.io/folder-service/
+helm repo add harjis https://harjis.github.io/folder-service/
 ```
 
-```shell script
-helm install folder-service folder-service
-```
+4. Install service with
+````shell script
+helm install folder-service harjis/folder-service
+````
