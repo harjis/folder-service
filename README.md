@@ -9,3 +9,7 @@ helm repo index .
 ```shell script
 helm repo add folder-service https://harjis.github.io/folder-service/
 ```
+
+```shell script
+helm install folder-service folder-service
+```
