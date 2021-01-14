@@ -1,1 +1,1 @@
-export { Folders } from "./Folders";
+export { default } from "./Folders";

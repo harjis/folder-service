@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Folders } from "./components/Folders";
+import Folders from "./components/Folders";
 
 const foldersChildrenByFolderId = {
   1: [<div>Folder 1 child 1</div>, <div>Folder 1 child 2</div>],

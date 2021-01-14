@@ -6,7 +6,7 @@ type FoldersChildrenByFolderId = { [key: number]: React.ReactNode[] };
 type Props = {
   foldersChildrenByFolderId: FoldersChildrenByFolderId;
 };
-export const Folders: React.FC<Props> = (props) => {
+const Folders: React.FC<Props> = (props) => {
   const { value: folders, error, loading } = useAsync(fetchFolders);
 
   if (loading) {
@@ -41,3 +41,5 @@ function renderFolderChildren(folderChildren: React.ReactNode[] | undefined) {
     </ul>
   );
 }
+
+export default Folders;
