@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta5
+apiVersion: skaffold/v2beta10
 kind: Config
 build:
   artifacts:
@@ -7,13 +7,12 @@ build:
       docker:
         dockerfile: Dockerfile.dev
       sync:
-        manual:
-          - src: "src/*"
-            dest: .
+        infer:
+          - "**/*"
     - image: d0rka/folder-service-backend
       context: backend
       docker:
         dockerfile: Dockerfile.dev
       sync:
         infer:
-          - "*.ex"
+          - "**/*"
