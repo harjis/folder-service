@@ -16,6 +16,10 @@ defmodule Backend.Folders.Folder do
     timestamps()
   end
 
+  def roots do
+    AsNestedSet.roots(Folder, %{}) |> AsNestedSet.execute(Repo)
+  end
+
   @doc false
   def changeset(folder, attrs) do
     folder

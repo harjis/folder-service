@@ -28,6 +28,19 @@ defmodule Backend.Folders do
   end
 
   @doc """
+  Returns the list of root folders.
+
+  ## Examples
+
+      iex> list_roots()
+      [%Folder{}, ...]
+
+  """
+  def list_roots() do
+    Folder.roots()
+  end
+
+  @doc """
   Gets a single folder.
 
   Raises `Ecto.NoResultsError` if the Folder does not exist.

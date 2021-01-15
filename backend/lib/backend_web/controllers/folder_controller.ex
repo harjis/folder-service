@@ -6,9 +6,9 @@ defmodule BackendWeb.FolderController do
 
   action_fallback BackendWeb.FallbackController
 
-  def index(conn, _params) do
-    folders = Folders.list_folders()
-    render(conn, "index.json", folders: folders)
+  def roots(conn, _params) do
+    roots = Folders.list_roots()
+    render(conn, "index.json", folders: roots)
   end
 
   def show(conn, %{"id" => id}) do

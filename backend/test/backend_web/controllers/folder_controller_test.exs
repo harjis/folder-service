@@ -17,14 +17,22 @@ defmodule BackendWeb.FolderControllerTest do
     folder
   end
 
+  def fixture(:child, attrs, parent_id) do
+    {:ok, folder} = Folders.add_child(attrs, parent_id)
+    folder
+  end
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  describe "index" do
-    test "lists all folders", %{conn: conn} do
-      conn = get(conn, Routes.folder_path(conn, :index))
-      assert json_response(conn, 200) == []
+  describe "root" do
+    setup [:create_root]
+
+    test "renders root folders when there are root folders", %{conn: conn, folder: %{id: root_id}} do
+      add_child(root_id)
+      conn = get(conn, Routes.folder_path(conn, :roots))
+      assert [%{"id" => id}] = json_response(conn, 200)
     end
   end
 
@@ -82,6 +90,11 @@ defmodule BackendWeb.FolderControllerTest do
 
   defp create_root(_) do
     folder = fixture(:root)
+    {:ok, folder: folder}
+  end
+
+  defp add_child(parent_id) do
+    folder = fixture(:child, %{name: "Child"}, parent_id)
     {:ok, folder: folder}
   end
 end
