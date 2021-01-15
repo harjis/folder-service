@@ -1,45 +1,31 @@
-import React from "react";
-import { useAsync } from "react-use";
-import { fetchFolders } from "../../api/folders";
+import React, { Suspense } from "react";
+import { useRecoilValue } from "recoil";
 
-type FoldersChildrenByFolderId = { [key: number]: React.ReactNode[] };
-type Props = {
-  foldersChildrenByFolderId: FoldersChildrenByFolderId;
-};
+import { rootsAtom } from "../../atoms/folders";
+import { Loading } from "../Loading/Loading";
+import { Folder } from "./Folder";
+
+type Props = {};
 const Folders: React.FC<Props> = (props) => {
-  const { value: folders, error, loading } = useAsync(fetchFolders);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const roots = useRecoilValue(rootsAtom);
 
   return (
     <ul>
-      {folders?.map((folder) => (
-        <li key={folder.id}>
-          {folder.name}
-
-          {renderFolderChildren(props.foldersChildrenByFolderId[folder.id])}
+      {roots.map((root) => (
+        <li key={root.id}>
+          <Folder folder={root} />
         </li>
       ))}
     </ul>
   );
 };
 
-function renderFolderChildren(folderChildren: React.ReactNode[] | undefined) {
-  if (folderChildren === undefined) {
-    return null;
-  }
+const FoldersContainer = () => {
   return (
-    <ul>
-      {folderChildren.map((child) => (
-        <li>{child}</li>
-      ))}
-    </ul>
+    <Suspense fallback={<Loading message="root folders" />}>
+      <Folders />
+    </Suspense>
   );
-}
+};
 
-export default Folders;
+export default FoldersContainer;

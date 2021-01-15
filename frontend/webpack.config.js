@@ -45,7 +45,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+        exclude: [/module\.css$/],
+      },
+      {
+        test: /module\.css$/,
         use: [
           "style-loader",
           "@teamsupercell/typings-for-css-modules-loader",
