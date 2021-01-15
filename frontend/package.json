@@ -22,13 +22,9 @@
   },
   "scripts": {
     "bundle": "webpack",
-    "start": "webpack serve --mode=development"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "start": "webpack serve --mode=development",
+    "lint": "eslint . --ext .ts,.tsx",
+    "ts": "tsc --pretty --noEmit"
   },
   "browserslist": {
     "production": [
@@ -51,8 +47,13 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^4.5.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.13.0",

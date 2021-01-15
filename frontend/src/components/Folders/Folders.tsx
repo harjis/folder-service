@@ -5,22 +5,19 @@ import { rootsAtom } from "../../atoms/folders";
 import { Loading } from "../Loading/Loading";
 import { Folder } from "./Folder";
 
-type Props = {};
-const Folders: React.FC<Props> = (props) => {
+const Folders: React.FC = () => {
   const roots = useRecoilValue(rootsAtom);
 
   return (
     <ul>
       {roots.map((root) => (
-        <li key={root.id}>
-          <Folder folder={root} />
-        </li>
+        <Folder key={root.id} folder={root} />
       ))}
     </ul>
   );
 };
 
-const FoldersContainer = () => {
+const FoldersContainer: React.FC = () => {
   return (
     <Suspense fallback={<Loading message="root folders" />}>
       <Folders />

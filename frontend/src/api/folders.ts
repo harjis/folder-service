@@ -10,6 +10,11 @@ export type Folder = {
   updatedAt: string;
 };
 
+export const fetchFolder = (folderId: number): Promise<Folder> =>
+  fetch(`${url}/folders/${folderId}`, options).then((response) =>
+    response.json()
+  );
+
 export const fetchRoots = (): Promise<Folder[]> =>
   fetch(`${url}/folders/roots`, options).then((response) => response.json());
 

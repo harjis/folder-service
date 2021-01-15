@@ -1,21 +1,23 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 
-import { Folder as FolderApiType } from "../../api/folders";
-import { childrenAtom } from "../../atoms/folders";
+import { useFolder } from "../../hooks/useFolder";
+import { Folder as FolderType } from "../../api/folders";
+
+import styles from "./Folder.module.css";
 
 type Props = {
-  folder: FolderApiType;
+  folder: FolderType;
 };
 export const Folder: React.FC<Props> = (props) => {
-  const children = useRecoilValue(childrenAtom(props.folder.id));
+  const { children, isCollapsed, toggleCollapsed } = useFolder(props);
   return (
     <>
-      <li>{props.folder.name}</li>
+      <li className={styles.folder} onClick={toggleCollapsed}>
+        {props.folder.id}: {props.folder.name}
+      </li>
       <ul>
-        {children.map((child) => (
-          <Folder folder={child} />
-        ))}
+        {!isCollapsed &&
+          children.map((child) => <Folder key={child.id} folder={child} />)}
       </ul>
     </>
   );
