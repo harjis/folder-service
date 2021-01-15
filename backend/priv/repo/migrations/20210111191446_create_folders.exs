@@ -3,11 +3,11 @@ defmodule Backend.Repo.Migrations.CreateFolders do
 
   def change do
     create table(:folders) do
-      add :name, :string
+      add :name, :string, null: false
 
       add :parent_id, :id
-      add :lft, :integer
-      add :rgt, :integer
+      add :lft, :integer, null: false
+      add :rgt, :integer, null: false
 
       timestamps()
     end

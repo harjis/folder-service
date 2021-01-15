@@ -41,7 +41,8 @@ defmodule Backend.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:as_nested_set, "~> 3.4"}
+      {:as_nested_set, "~> 3.4"},
+      {:exconstructor, "~> 1.1.0"}
     ]
   end
 

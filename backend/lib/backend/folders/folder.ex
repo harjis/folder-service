@@ -23,7 +23,6 @@ defmodule Backend.Folders.Folder do
     |> validate_required([:name])
   end
 
-
   def create_root(attrs \\ %{}) do
     with {:ok} <- validate(attrs) do
       attrs
@@ -85,7 +84,8 @@ defmodule Backend.Folders.Folder do
   end
 
   defp map_to_struct(attrs) do
-    struct(Folder, attrs)
+    # ExConstructor.populate_struct is used because struct(Folder, attrs) ignores string keys
+    ExConstructor.populate_struct(%Folder{}, attrs)
   end
 
   defp to_tuple(%Folder{} = folder) do

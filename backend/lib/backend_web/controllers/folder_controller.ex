@@ -11,15 +11,6 @@ defmodule BackendWeb.FolderController do
     render(conn, "index.json", folders: folders)
   end
 
-  def create(conn, %{"folder" => folder_params}) do
-    with {:ok, %Folder{} = folder} <- Folders.create_folder(folder_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.folder_path(conn, :show, folder))
-      |> render("show.json", folder: folder)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     folder = Folders.get_folder!(id)
     render(conn, "show.json", folder: folder)
@@ -38,6 +29,12 @@ defmodule BackendWeb.FolderController do
 
     with {:ok, %Folder{}} <- Folders.delete_folder(folder) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def add_child(conn, %{"parent_id" => parent_id, "child" => child}) do
+    with {:ok, %Folder{} = folder} <- Folders.add_child(child, parent_id) do
+      render(conn, "show.json", folder: folder)
     end
   end
 end

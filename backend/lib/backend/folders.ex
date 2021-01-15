@@ -44,24 +44,6 @@ defmodule Backend.Folders do
   def get_folder!(id), do: Repo.get!(Folder, id)
 
   @doc """
-  Creates a folder.
-
-  ## Examples
-
-      iex> create_folder(%{field: value})
-      {:ok, %Folder{}}
-
-      iex> create_folder(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_folder(attrs \\ %{}) do
-    %Folder{}
-    |> Folder.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
   Updates a folder.
 
   ## Examples
@@ -108,7 +90,6 @@ defmodule Backend.Folders do
     Folder.changeset(folder, %{})
   end
 
-
   @doc """
   Creates a root.
 
@@ -130,10 +111,10 @@ defmodule Backend.Folders do
 
   ## Examples
 
-      iex> add_child(%{field: value}, 1)
+      iex> add_child(%{name: "name"}, 1)
       {:ok, %Folder{}}
 
-      iex> add_child(%{field: bad_value}, 1)
+      iex> add_child(%{name: nil}, 1)
       {:error, %Ecto.Changeset{}}
 
   """

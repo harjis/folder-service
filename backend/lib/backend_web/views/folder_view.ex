@@ -11,6 +11,14 @@ defmodule BackendWeb.FolderView do
   end
 
   def render("folder.json", %{folder: folder}) do
-    %{id: folder.id, name: folder.name}
+    %{
+      id: folder.id,
+      insertedAt: folder.inserted_at,
+      lft: folder.lft,
+      name: folder.name,
+      parentId: folder.parent_id,
+      rgt: folder.rgt,
+      updatedAt: folder.updated_at
+    }
   end
 end
