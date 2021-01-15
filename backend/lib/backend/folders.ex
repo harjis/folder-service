@@ -40,6 +40,11 @@ defmodule Backend.Folders do
     Folder.roots()
   end
 
+  def list_children(target_id) do
+    target = get_folder!(target_id)
+    Folder.children(target)
+  end
+
   @doc """
   Gets a single folder.
 

@@ -36,6 +36,16 @@ defmodule BackendWeb.FolderControllerTest do
     end
   end
 
+  describe "children" do
+    setup [:create_root]
+
+    test "renders root folders when there are root folders", %{conn: conn, folder: %{id: root_id}} do
+      {:ok, folder: %{id: child_id}} = add_child(root_id)
+      conn = get(conn, Routes.folder_path(conn, :children), parent_id: root_id)
+      assert [%{"id" => child_id}] = json_response(conn, 200)
+    end
+  end
+
   describe "update folder" do
     setup [:create_root]
 

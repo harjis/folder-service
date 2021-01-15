@@ -20,6 +20,10 @@ defmodule Backend.Folders.Folder do
     AsNestedSet.roots(Folder, %{}) |> AsNestedSet.execute(Repo)
   end
 
+  def children(target) do
+    AsNestedSet.children(target) |> AsNestedSet.execute(Repo)
+  end
+
   @doc false
   def changeset(folder, attrs) do
     folder

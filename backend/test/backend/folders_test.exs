@@ -39,7 +39,25 @@ defmodule Backend.FoldersTest do
       folder2 = child_folder_fixture(%{name: "#{name} 2"}, root.id)
       _folder3 = child_folder_fixture(%{name: "Views 1"}, root.id)
       updated_root = Folders.get_folder!(root.id)
-      assert Folders.list_folders(name) == [ folder2, updated_root]
+      assert Folders.list_folders(name) == [folder2, updated_root]
+    end
+
+    test "list_roots/0 returns all roots" do
+      root = root_folder_fixture()
+      root2 = root_folder_fixture()
+      assert Folders.list_roots() == [root, root2]
+    end
+
+    test "list_children/0 returns all descendants for target" do
+      root1 = root_folder_fixture()
+      root2 = root_folder_fixture()
+      child = child_folder_fixture(%{name: "Child 1 Root 1"}, root1.id)
+      child_folder_fixture(%{name: "Child 1 Child 1"}, child.id)
+      child_folder_fixture(%{name: "Child 1 Root 2"}, root2.id)
+
+      reloaded_child = Folders.get_folder!(child.id)
+
+      assert Folders.list_children(root1.id) == [reloaded_child]
     end
 
     test "get_folder!/1 returns the folder with given id" do

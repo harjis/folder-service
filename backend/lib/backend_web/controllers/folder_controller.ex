@@ -11,6 +11,11 @@ defmodule BackendWeb.FolderController do
     render(conn, "index.json", folders: roots)
   end
 
+  def children(conn, %{"parent_id" => parent_id}) do
+    children = Folders.list_children(parent_id)
+    render(conn, "index.json", folders: children)
+  end
+
   def show(conn, %{"id" => id}) do
     folder = Folders.get_folder!(id)
     render(conn, "show.json", folder: folder)

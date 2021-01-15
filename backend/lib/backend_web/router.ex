@@ -9,7 +9,8 @@ defmodule BackendWeb.Router do
     pipe_through :api
 
     get "/folders/roots", FolderController, :roots
-    resources "/folders", FolderController, except: [:index, :create]
+    get "/folders/children", FolderController, :children
     post "/folders/add_child", FolderController, :add_child
+    resources "/folders", FolderController, except: [:index, :create]
   end
 end
