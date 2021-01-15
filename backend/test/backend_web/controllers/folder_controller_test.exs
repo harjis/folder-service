@@ -24,21 +24,21 @@ defmodule BackendWeb.FolderControllerTest do
   describe "index" do
     test "lists all folders", %{conn: conn} do
       conn = get(conn, Routes.folder_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200) == []
     end
   end
 
   describe "create folder" do
     test "renders folder when data is valid", %{conn: conn} do
       conn = post(conn, Routes.folder_path(conn, :create), folder: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"id" => id} = json_response(conn, 201)
 
       conn = get(conn, Routes.folder_path(conn, :show, id))
 
       assert %{
                "id" => id,
                "name" => "some name"
-             } = json_response(conn, 200)["data"]
+             } = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -52,14 +52,14 @@ defmodule BackendWeb.FolderControllerTest do
 
     test "renders folder when data is valid", %{conn: conn, folder: %Folder{id: id} = folder} do
       conn = put(conn, Routes.folder_path(conn, :update, folder), folder: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert %{"id" => ^id} = json_response(conn, 200)
 
       conn = get(conn, Routes.folder_path(conn, :show, id))
 
       assert %{
                "id" => id,
                "name" => "some updated name"
-             } = json_response(conn, 200)["data"]
+             } = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, folder: folder} do

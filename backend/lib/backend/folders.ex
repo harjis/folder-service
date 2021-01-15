@@ -21,6 +21,12 @@ defmodule Backend.Folders do
     Repo.all(Folder)
   end
 
+  def list_folders(name) do
+    Folder
+    |> Folder.with_name(name)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single folder.
 
@@ -100,5 +106,73 @@ defmodule Backend.Folders do
   """
   def change_folder(%Folder{} = folder) do
     Folder.changeset(folder, %{})
+  end
+
+
+  @doc """
+  Creates a root.
+
+  ## Examples
+
+      iex> create_root(%{field: value})
+      {:ok, %Folder{}}
+
+      iex> create_root(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_root(attrs \\ %{}) do
+    Folder.create_root(attrs)
+  end
+
+  @doc """
+  Creates a child node for parent.
+
+  ## Examples
+
+      iex> add_child(%{field: value}, 1)
+      {:ok, %Folder{}}
+
+      iex> add_child(%{field: bad_value}, 1)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def add_child(attrs \\ %{}, parent_id) do
+    parent = get_folder!(parent_id)
+    Folder.add_child(attrs, parent)
+  end
+
+  @doc """
+  Creates a node on the left side of target.
+
+  ## Examples
+
+      iex> add_to_left(%{field: value}, 1)
+      {:ok, %Folder{}}
+
+      iex> add_to_left(%{field: bad_value}, 1)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def add_to_left(attrs \\ %{}, target_id) do
+    target = get_folder!(target_id)
+    Folder.add_to_left(attrs, target)
+  end
+
+  @doc """
+  Creates a node on the right side of target.
+
+  ## Examples
+
+      iex> add_to_right(%{field: value}, 1)
+      {:ok, %Folder{}}
+
+      iex> add_to_right(%{field: bad_value}, 1)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def add_to_right(attrs \\ %{}, target_id) do
+    target = get_folder!(target_id)
+    Folder.add_to_right(attrs, target)
   end
 end

@@ -4,7 +4,7 @@ use Mix.Config
 config :backend, Backend.Repo,
   username: "postgres",
   password: "postgres",
-  database: "backend_test",
+  database: "folder-service_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 

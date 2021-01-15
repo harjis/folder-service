@@ -24,6 +24,14 @@ defmodule Backend.FoldersTest do
       assert Folders.list_folders() == [folder]
     end
 
+    test "list_folders/1 returns all folders by name" do
+      name = "Folder"
+      folder1 = folder_fixture(%{name: "#{name} 1"})
+      folder2 = folder_fixture(%{name: "#{name} 2"})
+      _folder3 = folder_fixture(%{name: "Views 1"})
+      assert Folders.list_folders(name) == [folder1, folder2]
+    end
+
     test "get_folder!/1 returns the folder with given id" do
       folder = folder_fixture()
       assert Folders.get_folder!(folder.id) == folder
@@ -59,6 +67,58 @@ defmodule Backend.FoldersTest do
     test "change_folder/1 returns a folder changeset" do
       folder = folder_fixture()
       assert %Ecto.Changeset{} = Folders.change_folder(folder)
+    end
+
+    test "add_root/1 with valid data creates a root folder" do
+      {:ok, root_folder} = Folders.create_root(%{name: "root"})
+      assert root_folder.parent_id == nil
+      assert root_folder.name == "root"
+    end
+
+    test "add_root/1 with invalid data returns error changeset" do
+      {:error, changeset} = Folders.create_root(%{name: nil})
+      assert Map.has_key?(Enum.into(changeset.errors, %{}), :name)
+    end
+
+    test "add_child/2 with valid data creates a child node" do
+      {:ok, root_folder} = Folders.create_root(%{name: "root"})
+      {:ok, child_node} = Folders.add_child(%{name: "child node"}, root_folder.id)
+      assert child_node.parent_id == root_folder.id
+      assert child_node.name == "child node"
+    end
+
+    test "add_child/2 with invalid data returns error changeset" do
+      {:ok, root_folder} = Folders.create_root(%{name: "some name"})
+      {:error, changeset} = Folders.add_child(%{name: nil}, root_folder.id)
+      assert Map.has_key?(Enum.into(changeset.errors, %{}), :name)
+    end
+
+    test "add_to_left/2 with valid data creates a node on targets left side" do
+      {:ok, root_folder} = Folders.create_root(%{name: "root"})
+      {:ok, child_node} = Folders.add_child(%{name: "right node"}, root_folder.id)
+      {:ok, left_node} = Folders.add_to_left(%{name: "left node"}, child_node.id)
+      assert left_node.parent_id == root_folder.id
+      assert left_node.name == "left node"
+    end
+
+    test "add_to_left/2 with invalid data returns error changeset" do
+      {:ok, root_folder} = Folders.create_root(%{name: "some name"})
+      {:error, changeset} = Folders.add_to_left(%{name: nil}, root_folder.id)
+      assert Map.has_key?(Enum.into(changeset.errors, %{}), :name)
+    end
+
+    test "add_to_right/2 with valid data creates a node on targets right side" do
+      {:ok, root_folder} = Folders.create_root(%{name: "root"})
+      {:ok, child_node} = Folders.add_child(%{name: "left node"}, root_folder.id)
+      {:ok, left_node} = Folders.add_to_right(%{name: "right node"}, child_node.id)
+      assert left_node.parent_id == root_folder.id
+      assert left_node.name == "right node"
+    end
+
+    test "add_to_right/2 with invalid data returns error changeset" do
+      {:ok, root_folder} = Folders.create_root(%{name: "some name"})
+      {:error, changeset} = Folders.add_to_right(%{name: nil}, root_folder.id)
+      assert Map.has_key?(Enum.into(changeset.errors, %{}), :name)
     end
   end
 end

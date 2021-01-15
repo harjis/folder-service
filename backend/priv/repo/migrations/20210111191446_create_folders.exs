@@ -5,8 +5,15 @@ defmodule Backend.Repo.Migrations.CreateFolders do
     create table(:folders) do
       add :name, :string
 
+      add :parent_id, :id
+      add :lft, :integer
+      add :rgt, :integer
+
       timestamps()
     end
 
+    create index(:folders, [:parent_id])
+    create index(:folders, [:lft])
+    create index(:folders, [:rgt])
   end
 end
