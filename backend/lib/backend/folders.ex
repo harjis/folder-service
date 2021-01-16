@@ -18,7 +18,9 @@ defmodule Backend.Folders do
 
   """
   def list_folders do
-    Repo.all(Folder)
+    Folder
+    |> order_by([f], f.id)
+    |> Repo.all
   end
 
   def list_folders(name) do
@@ -174,4 +176,6 @@ defmodule Backend.Folders do
     target = get_folder!(target_id)
     Folder.add_to_right(attrs, target)
   end
+
+  defdelegate generate(depth \\ 2, items_on_level \\ 2), to: Backend.Folders.Generate
 end

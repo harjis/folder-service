@@ -13,18 +13,6 @@ alias Ecto.Multi
 
 if Mix.env() !== :test do
   Multi.new()
-  |> Multi.run(:root_folder, fn _, _ -> Backend.Folders.create_root(%{name: "Root"}) end)
-  |> Multi.run(:child1, fn _, %{root_folder: root_folder} ->
-    Backend.Folders.add_child(%{name: "Child 1"}, root_folder.id)
-  end)
-  |> Multi.run(:child2, fn _, %{root_folder: root_folder} ->
-    Backend.Folders.add_child(%{name: "Child 2"}, root_folder.id)
-  end)
-  |> Multi.run(:child11, fn _, %{child1: child1} ->
-    Backend.Folders.add_child(%{name: "Child 1 1"}, child1.id)
-  end)
-  |> Multi.run(:child12, fn _, %{child1: child1} ->
-    Backend.Folders.add_child(%{name: "Child 1 2"}, child1.id)
-  end)
+  |> Multi.run(:generate, fn _, _ -> Backend.Folders.generate(3, 10) end)
   |> Backend.Repo.transaction()
 end

@@ -7,6 +7,7 @@ config :backend, Backend.Repo,
   database: System.get_env("PGDATABASE_DEVELOPMENT") || "folder-service_development",
   hostname: System.get_env("PGHOST") || "localhost",
   show_sensitive_data_on_connection_error: true,
+  timeout: 300000,
   pool_size: 10
 
 # For development, we disable any cache and enable
