@@ -14,10 +14,10 @@ skaffold dev
 
 1. Add helm repo
 ```shell script
-helm repo add harjis https://harjis.github.io/folder-service/
+helm repo add harjis-charts https://harjis.github.io/helm-charts/
 ```
 
 4. Install service with
 ````shell script
-helm install folder-service harjis/folder-service
+helm install folder-service harjis-charts/folder-service
 ````
