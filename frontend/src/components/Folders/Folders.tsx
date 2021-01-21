@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useRecoilValue } from "recoil";
+import { RecoilRoot, useRecoilValue } from "recoil";
 
 import { rootsAtom } from "../../atoms/folders";
 import { Loading } from "../Loading/Loading";
@@ -19,9 +19,11 @@ const Folders: React.FC = () => {
 
 const FoldersContainer: React.FC = () => {
   return (
-    <Suspense fallback={<Loading message="root folders" />}>
-      <Folders />
-    </Suspense>
+    <RecoilRoot>
+      <Suspense fallback={<Loading message="root folders" />}>
+        <Folders />
+      </Suspense>
+    </RecoilRoot>
   );
 };
 
