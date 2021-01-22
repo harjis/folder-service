@@ -4,7 +4,7 @@ services:
   - docker
 env:
   global:
-    - VERSION=0.1.6
+    - VERSION=0.2.0
     - SHA=$(git rev-parse HEAD)
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:

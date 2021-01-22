@@ -1,4 +1,4 @@
-import { AuthStore } from "../stores/AuthStore";
+import * as AuthStore from "../stores/AuthStore";
 
 export const url = `${window.location.origin}/api`;
 

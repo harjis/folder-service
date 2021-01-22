@@ -1,11 +1,9 @@
 let accessToken: string | null = null;
 
-export const AuthStore = {
-  setAccessToken: (token: string): void => {
-    accessToken = token;
-  },
+export const setAccessToken = (token: string): void => {
+  accessToken = token;
+};
 
-  getAccessToken: (): string | null => {
-    return accessToken;
-  },
+export const getAccessToken = (): string | null => {
+  return accessToken;
 };

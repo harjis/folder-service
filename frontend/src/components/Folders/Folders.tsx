@@ -4,7 +4,7 @@ import { RecoilRoot, useRecoilValue } from "recoil";
 import { rootsAtom } from "../../atoms/folders";
 import { Loading } from "../Loading/Loading";
 import { Folder } from "./Folder";
-import { AuthStore } from "../../stores/AuthStore";
+import * as AuthStore from "../../stores/AuthStore";
 
 const Folders: React.FC = () => {
   const roots = useRecoilValue(rootsAtom);
