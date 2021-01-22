@@ -5,7 +5,7 @@ import Folders from "./components/Folders";
 function App() {
   return (
     <div>
-      <Folders />
+      <Folders accessToken="set me" logout={() => Promise.resolve()} />
     </div>
   );
 }

@@ -11,15 +11,15 @@ export type Folder = {
 };
 
 export const fetchFolder = (folderId: number): Promise<Folder> =>
-  fetch(`${url}/folders/${folderId}`, options).then((response) =>
+  fetch(`${url}/folders/${folderId}`, options()).then((response) =>
     response.json()
   );
 
 export const fetchRoots = (): Promise<Folder[]> =>
-  fetch(`${url}/folders/roots`, options).then((response) => response.json());
+  fetch(`${url}/folders/roots`, options()).then((response) => response.json());
 
 export const fetchChildren = (folderId: number): Promise<Folder[]> =>
   fetch(
     `${url}/folders/children?parent_id=${folderId}`,
-    options
+    options()
   ).then((response) => response.json());
