@@ -1,10 +1,15 @@
-import { atom, atomFamily, selectorFamily } from "recoil";
+import { atom, atomFamily, selector, selectorFamily } from "recoil";
 
 import { fetchFolder, fetchRoots, Folder } from "../api/folders";
 
 export const rootsAtom = atom({
   key: "folders/roots",
-  default: fetchRoots(),
+  default: selector({
+    key: "folders/roots/default",
+    get: () => {
+      return fetchRoots();
+    },
+  }),
 });
 
 export const loadedFoldersAtom = atom({
