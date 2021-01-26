@@ -21,7 +21,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "bundle": "webpack",
+    "build": "webpack",
     "start": "webpack serve --mode=development",
     "lint": "eslint . --ext .ts,.tsx",
     "ts": "tsc --pretty --noEmit"
