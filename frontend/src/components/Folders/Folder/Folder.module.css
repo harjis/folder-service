@@ -1,0 +1,10 @@
+.folder {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.folderIcon {
+  padding-right: 4px;
+}

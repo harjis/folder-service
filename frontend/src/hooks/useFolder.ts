@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilState } from "recoil";
 
 import { fetchChildren, Folder } from "../api/folders";
 import { childrenAtom, loadedFoldersAtom } from "../atoms/folders";

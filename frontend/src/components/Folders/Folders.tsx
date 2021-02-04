@@ -1,36 +1,34 @@
-import React, { Suspense } from "react";
-import { RecoilRoot, useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilValue } from "recoil";
 
-import { rootsAtom } from "../../atoms/folders";
-import { Loading } from "../Loading/Loading";
-import { Folder } from "./Folder";
 import * as AuthStore from "../../stores/AuthStore";
-
-const Folders: React.FC = () => {
-  const roots = useRecoilValue(rootsAtom);
-
-  return (
-    <ul>
-      {roots.map((root) => (
-        <Folder key={root.id} folder={root} />
-      ))}
-    </ul>
-  );
-};
+import { Folder } from "./Folder/Folder";
+import { ItemsByFolderId } from "../../types";
+import { rootsAtom } from "../../atoms/folders";
 
 type PropsFromAuthenticationService = {
   accessToken: string;
   logout: () => Promise<void>;
 };
-const FoldersContainer: React.FC<PropsFromAuthenticationService> = (props) => {
+type OwnProps = {
+  itemsByFolderId: ItemsByFolderId;
+};
+const Folders: React.FC<PropsFromAuthenticationService & OwnProps> = (
+  props
+) => {
   AuthStore.setAccessToken(props.accessToken);
+  const roots = useRecoilValue(rootsAtom);
   return (
-    <RecoilRoot>
-      <Suspense fallback={<Loading message="root folders" />}>
-        <Folders />
-      </Suspense>
-    </RecoilRoot>
+    <ul>
+      {roots.map((root) => (
+        <Folder
+          key={root.id}
+          folder={root}
+          itemsByFolderId={props.itemsByFolderId}
+        />
+      ))}
+    </ul>
   );
 };
 
-export default FoldersContainer;
+export default Folders;

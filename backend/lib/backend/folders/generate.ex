@@ -3,7 +3,7 @@ defmodule Backend.Folders.Generate do
   alias Backend.Folders.Folder
 
   def generate(depth, items_on_level) do
-    {:ok, root} = Folders.create_root(%{name: "Root"})
+    {:ok, root} = Folders.create_root(%{name: "Deep Root"})
 
     generate([root], depth, items_on_level, 1)
   end
