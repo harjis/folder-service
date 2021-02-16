@@ -1,31 +1,30 @@
-import { atom, atomFamily, selector, selectorFamily } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 
-import { fetchFolder, fetchRoots, Folder } from "../api/folders";
+import { Folder } from "../api/folders";
 
-export const rootsAtom = atom({
+export const foldersAtom = atom<Folder[]>({ key: "folders", default: [] });
+export const rootFoldersAtom = selector<Folder[]>({
   key: "folders/roots",
-  default: selector({
-    key: "folders/roots/default",
-    get: () => {
-      return fetchRoots();
-    },
-  }),
+  get: ({ get }) =>
+    get(foldersAtom).filter((folder) => folder.parentId === null),
+});
+export const childrenFoldersAtom = selectorFamily<Folder[], number>({
+  key: "folders/children",
+  get: (folderId) => ({ get }) =>
+    get(foldersAtom).filter((folder) => folder.parentId === folderId),
 });
 
-export const loadedFoldersAtom = atom({
-  key: "folders/loadedFolders",
-  default: new Set(),
-});
-
-export const childrenAtom = atomFamily<Folder[], number>({
-  key: "folders/childrenIds",
+export const searchFoldersAtom = atom<Folder[]>({
+  key: "folders/search",
   default: [],
 });
-
-export const folderAtom = atomFamily<Folder, number>({
-  key: "folders/folderAtom",
-  default: selectorFamily({
-    key: "folders/folderAtom/default",
-    get: (folderId) => () => fetchFolder(folderId),
-  }),
+export const searchRootFoldersAtom = selector<Folder[]>({
+  key: "folders/search/roots",
+  get: ({ get }) =>
+    get(searchFoldersAtom).filter((folder) => folder.parentId === null),
+});
+export const searchChildrenFoldersAtom = selectorFamily<Folder[], number>({
+  key: "folders/search/children",
+  get: (folderId) => ({ get }) =>
+    get(searchFoldersAtom).filter((folder) => folder.parentId === folderId),
 });

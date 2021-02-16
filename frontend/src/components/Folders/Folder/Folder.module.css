@@ -8,3 +8,7 @@
 .folderIcon {
   padding-right: 4px;
 }
+
+.highlightedText {
+  background: #fcf8be;
+}

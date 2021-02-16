@@ -16,12 +16,20 @@ defmodule Backend.Folders.Folder do
     timestamps()
   end
 
+  def with_name(query \\ Folder, name) do
+    query |> where([f], ilike(f.name, ^"%#{name}%"))
+  end
+
   def roots do
     AsNestedSet.roots(Folder, %{}) |> AsNestedSet.execute(Repo)
   end
 
   def children(target) do
     AsNestedSet.children(target) |> AsNestedSet.execute(Repo)
+  end
+
+  def ancestors(target) do
+    AsNestedSet.ancestors(target) |> AsNestedSet.execute(Repo)
   end
 
   @doc false
@@ -77,10 +85,6 @@ defmodule Backend.Folders.Folder do
     else
       err -> {:error, err}
     end
-  end
-
-  def with_name(query \\ Folder, name) do
-    query |> where([f], ilike(f.name, ^"%#{name}%"))
   end
 
   defp validate(attrs) do

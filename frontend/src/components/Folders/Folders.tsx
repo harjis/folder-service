@@ -1,10 +1,12 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+
+import s from "./Folders.module.css";
 
 import * as AuthStore from "../../stores/AuthStore";
 import { Folder } from "./Folder/Folder";
 import { ItemsByFolderId } from "../../types";
-import { rootsAtom } from "../../atoms/folders";
+import { Input } from "../Input";
+import { useRootFolders } from "../../hooks/useRootFolders";
 
 type PropsFromAuthenticationService = {
   accessToken: string;
@@ -17,18 +19,25 @@ const Folders: React.FC<PropsFromAuthenticationService & OwnProps> = (
   props
 ) => {
   AuthStore.setAccessToken(props.accessToken);
-  const roots = useRecoilValue(rootsAtom);
+  const { roots, search, onSearch, isSearching } = useRootFolders();
+
   return (
-    <ul>
-      {roots.map((root) => (
-        <Folder
-          key={root.id}
-          folder={root}
-          itemsByFolderId={props.itemsByFolderId}
-        />
-      ))}
-    </ul>
+    <div>
+      <Input value={search} onChange={onSearch} />
+      <ul className={s.container}>
+        {roots.map((root) => (
+          <Folder
+            key={root.id}
+            folder={root}
+            itemsByFolderId={props.itemsByFolderId}
+            isSearching={isSearching}
+            search={search}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
+// Do not change this. Module federation will break
 export default Folders;

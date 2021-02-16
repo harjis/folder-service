@@ -3,30 +3,10 @@ defmodule Backend.FoldersTest do
 
   alias Backend.Folders
 
+  import Backend.FolderFixtures
+
   describe "folders" do
     alias Backend.Folders.Folder
-
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
-
-    def root_folder_fixture(attrs \\ %{}) do
-      {:ok, folder} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Folders.create_root()
-
-      folder
-    end
-
-    def child_folder_fixture(attrs \\ %{}, parent_id) do
-      {:ok, folder} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Folders.add_child(parent_id)
-
-      folder
-    end
 
     test "list_folders/0 returns all folders" do
       folder = root_folder_fixture()
@@ -67,13 +47,13 @@ defmodule Backend.FoldersTest do
 
     test "update_folder/2 with valid data updates the folder" do
       folder = root_folder_fixture()
-      assert {:ok, %Folder{} = folder} = Folders.update_folder(folder, @update_attrs)
+      assert {:ok, %Folder{} = folder} = Folders.update_folder(folder, update_folders_attrs())
       assert folder.name == "some updated name"
     end
 
     test "update_folder/2 with invalid data returns error changeset" do
       folder = root_folder_fixture()
-      assert {:error, %Ecto.Changeset{}} = Folders.update_folder(folder, @invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Folders.update_folder(folder, invalid_folders_attrs())
       assert folder == Folders.get_folder!(folder.id)
     end
 

@@ -178,4 +178,6 @@ defmodule Backend.Folders do
   end
 
   defdelegate generate(depth \\ 2, items_on_level \\ 2), to: Backend.Folders.Generate
+
+  defdelegate search(name), to: Backend.Folders.Search
 end

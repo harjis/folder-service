@@ -1,5 +1,9 @@
 import React from "react";
-import { Folder as FolderIcon } from "@material-ui/icons";
+import {
+  Folder as FolderIcon,
+  FolderOpen as FolderIconOpen,
+} from "@material-ui/icons";
+import Highlighter from "react-highlight-words";
 
 import s from "./Folder.module.css";
 import { Folder as TFolder } from "../../../api/folders";
@@ -10,6 +14,8 @@ import { File } from "../File/File";
 type Props = {
   folder: TFolder;
   itemsByFolderId: ItemsByFolderId;
+  isSearching: boolean;
+  search: string;
 };
 export const Folder: React.FC<Props> = (props) => {
   const { children, isCollapsed, toggleCollapsed } = useFolder(props);
@@ -17,10 +23,14 @@ export const Folder: React.FC<Props> = (props) => {
     <>
       <li className={s.folder} onClick={toggleCollapsed}>
         <span className={s.folderIcon}>
-          <FolderIcon />
+          {isCollapsed ? <FolderIcon /> : <FolderIconOpen />}
         </span>
-
-        {props.folder.id}: {props.folder.name}
+        <Highlighter
+          highlightClassName={s.highlightedText}
+          searchWords={[props.search]}
+          autoEscape
+          textToHighlight={`${props.folder.id}: ${props.folder.name}`}
+        />
       </li>
       <ul>
         {!isCollapsed &&
@@ -29,6 +39,8 @@ export const Folder: React.FC<Props> = (props) => {
               key={child.id}
               folder={child}
               itemsByFolderId={props.itemsByFolderId}
+              isSearching={props.isSearching}
+              search={props.search}
             />
           ))}
       </ul>

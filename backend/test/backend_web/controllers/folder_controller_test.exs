@@ -98,6 +98,18 @@ defmodule BackendWeb.FolderControllerTest do
     end
   end
 
+  describe "search" do
+    setup [:create_root]
+
+    test "returns matching folders", %{conn: conn, folder: %{id: root_id}} do
+      {:ok, folder: %{id: child_id}} = add_child(root_id)
+      conn = get(conn, Routes.folder_path(conn, :search), search: "Child")
+
+      response = json_response(conn, 200)
+      assert length(response) == 2
+    end
+  end
+
   defp create_root(_) do
     folder = fixture(:root)
     {:ok, folder: folder}

@@ -2,6 +2,7 @@ declare namespace FolderModuleCssNamespace {
   export interface IFolderModuleCss {
     folder: string;
     folderIcon: string;
+    highlightedText: string;
   }
 }
 

@@ -1,11 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
-import { useRecoilCallback, useRecoilState } from "recoil";
+import { useCallback, useState } from "react";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 
 import { fetchChildren, Folder } from "../api/folders";
-import { childrenAtom, loadedFoldersAtom } from "../atoms/folders";
+import {
+  childrenFoldersAtom,
+  foldersAtom,
+  searchChildrenFoldersAtom,
+} from "../atoms/folders";
 
 type Props = {
   folder: Folder;
+  isSearching: boolean;
 };
 type Return = {
   children: Folder[];
@@ -15,27 +20,26 @@ type Return = {
 export const useFolder = (props: Props): Return => {
   const { id: folderId } = props.folder;
 
-  const [isCollapsed, setCollapsed] = useState(true);
-  const toggleCollapsed = useCallback(
-    () => setCollapsed((prevState) => !prevState),
-    [setCollapsed]
-  );
-
-  const [loadedFolders, setLoadedFolders] = useRecoilState(loadedFoldersAtom);
-  const [children, setChildren] = useRecoilState(childrenAtom(folderId));
-
+  const children = useRecoilValue(childrenFoldersAtom(folderId));
+  const searchChildren = useRecoilValue(searchChildrenFoldersAtom(folderId));
   const loadChildren = useRecoilCallback(
-    () => async () => {
+    ({ set }) => async (folderId: number) => {
       const fetchedChildren = await fetchChildren(folderId);
-      setChildren(fetchedChildren);
-      setLoadedFolders((prevLoadedFolders) => prevLoadedFolders.add(folderId));
+      set(foldersAtom, (prevFolders) => prevFolders.concat(fetchedChildren));
     },
     [folderId]
   );
 
-  useEffect(() => {
-    if (!isCollapsed && !loadedFolders.has(folderId)) loadChildren();
-  }, [folderId, isCollapsed, loadChildren, loadedFolders]);
+  const [isCollapsed, setCollapsed] = useState(true);
+  const toggleCollapsed = useCallback(() => {
+    // Folder which doesn't have anything in it will always be refetched
+    isCollapsed && children.length === 0 && loadChildren(folderId);
+    setCollapsed((prevState) => !prevState);
+  }, [children, folderId, isCollapsed, loadChildren]);
 
-  return { children, isCollapsed, toggleCollapsed };
+  return {
+    children: props.isSearching ? searchChildren : children,
+    isCollapsed: props.isSearching ? false : isCollapsed,
+    toggleCollapsed,
+  };
 };

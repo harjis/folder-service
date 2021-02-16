@@ -42,4 +42,9 @@ defmodule BackendWeb.FolderController do
       render(conn, "show.json", folder: folder)
     end
   end
+
+  def search(conn, %{"search" => search}) do
+    folders = Folders.search(search)
+    render(conn, "index.json", folders: folders)
+  end
 end

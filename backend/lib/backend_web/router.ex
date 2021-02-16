@@ -11,6 +11,7 @@ defmodule BackendWeb.Router do
     get "/folders/roots", FolderController, :roots
     get "/folders/children", FolderController, :children
     post "/folders/add_child", FolderController, :add_child
+    get "/folders/search", FolderController, :search
     resources "/folders", FolderController, except: [:index, :create]
   end
 end
