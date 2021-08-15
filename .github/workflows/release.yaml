@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  VERSION: 0.2.2
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -24,10 +27,40 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push backend
+        id: docker_build_backend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            d0rka/folder-service-backend:latest
+            d0rka/folder-service-backend:${{ github.sha }}
+            d0rka/folder-service-backend:${{ env.VERSION }}
+
+      - name: Build and push backend
+        id: docker_build_backend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: |
+            d0rka/folder-service-frontend:latest
+            d0rka/folder-service-frontend:${{ github.sha }}
+            d0rka/folder-service-frontend:${{ env.VERSION }}
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
           charts_dir: helm-charts
           charts_repo_url: https://harjis.github.io/helm-charts
         env:
-          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+          CR_TOKEN: ${{ secrets.CR_TOKEN }}

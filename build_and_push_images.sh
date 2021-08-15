@@ -12,8 +12,16 @@ then
       exit 1
 fi
 
-docker build -t d0rka/folder-service-backend:latest -t d0rka/folder-service-backend:$SHA -t d0rka/folder-service-backend:$VERSION -f ./backend/Dockerfile ./backend
-docker build -t d0rka/folder-service-frontend:latest -t d0rka/folder-service-frontend:$SHA -t d0rka/folder-service-frontend:$VERSION -f ./frontend/Dockerfile ./frontend
+docker build \
+-t d0rka/folder-service-backend:latest \
+-t d0rka/folder-service-backend:$SHA \
+-t d0rka/folder-service-backend:$VERSION \
+-f ./backend/Dockerfile ./backend
+docker build \
+-t d0rka/folder-service-frontend:latest \
+-t d0rka/folder-service-frontend:$SHA \
+-t d0rka/folder-service-frontend:$VERSION \
+-f ./frontend/Dockerfile ./frontend
 
 docker push d0rka/folder-service-backend:latest
 docker push d0rka/folder-service-frontend:latest
