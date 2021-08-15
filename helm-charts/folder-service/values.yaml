@@ -8,6 +8,7 @@ replicaCount: 1
 baseBackendImage: d0rka/folder-service-backend
 baseFrontendImage: d0rka/folder-service-frontend
 
+
 # This is the docker image version number
 applicationVersion: 0.2.2
 

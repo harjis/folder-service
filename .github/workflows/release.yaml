@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+# When you update this remember to touch Chart.yaml and values.yaml too
 env:
   VERSION: 0.2.2
 
