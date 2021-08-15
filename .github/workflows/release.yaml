@@ -46,7 +46,7 @@ jobs:
             d0rka/folder-service-backend:${{ env.VERSION }}
 
       - name: Build and push backend
-        id: docker_build_backend
+        id: docker_build_frontend
         uses: docker/build-push-action@v2
         with:
           context: ./frontend
