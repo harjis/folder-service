@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: folder-service-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: folder-service-server
+  template:
+    metadata:
+      labels:
+        component: folder-service-server
+    spec:
+      containers:
+        -
+          name: folder-service-backend
+          image: {{ include "folder-service.backendImage" . }}
+          ports:
+            -
+              containerPort: 3000
+          env:
+            -
+              name: PGHOST
+              value: folder-service-postgres-cis
+            -
+              name: PGUSER
+              value: postgres
+            -
+              name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
+            -
+              name: PGDATABASE_DEVELOPMENT
+              value: folder-service_development
+            -
+              name: PGDATABASE_TEST
+              value: folder-service_test
+            -
+              name: PGDATABASE_PRODUCTION
+              value: folder-service_production
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: folder-service-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: folder-service-web
+  template:
+    metadata:
+      labels:
+        component: folder-service-web
+    spec:
+      containers:
+        -
+          name: folder-service-frontend
+          image: {{ include "folder-service.frontendImage" . }}
+          ports:
+            -
+              containerPort: 3001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: folder-service-postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: folder-service-postgres
+  template:
+    metadata:
+      labels:
+        component: folder-service-postgres
+    spec:
+      volumes:
+        -
+          name: folder-service-postgres-storage
+          persistentVolumeClaim:
+            claimName: folder-service-database-pvc
+      containers:
+        -
+          name: folder-service-postgres
+          image: postgres
+          ports:
+            -
+              containerPort: 5432
+          volumeMounts:
+            -
+              name: folder-service-postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+          env:
+            -
+              name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
