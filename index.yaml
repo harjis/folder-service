@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   folder-service:
   - apiVersion: v2
+    appVersion: 0.2.3
+    created: "2021-08-18T16:34:03.736787089Z"
+    description: A folder service
+    digest: 1e353dff14e56ee48702ece711b4199cfb7d3e1d9c436c1bf819c0c92c556b4a
+    name: folder-service
+    type: application
+    urls:
+    - https://github.com/harjis/folder-service/releases/download/folder-service-0.2.3/folder-service-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
     appVersion: 0.2.2
     created: "2021-08-15T17:23:54.935340795Z"
     description: A folder service
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/harjis/folder-service/releases/download/folder-service-0.1.2/folder-service-0.1.2.tgz
     version: 0.1.2
-generated: "2021-08-15T17:23:54.935346795Z"
+generated: "2021-08-18T16:34:03.736795789Z"
